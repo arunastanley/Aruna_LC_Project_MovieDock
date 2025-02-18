@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 public class Review extends AbstractEntity{
@@ -27,11 +29,14 @@ public class Review extends AbstractEntity{
     @NotNull
     private int star_rating;
 
+    private LocalDateTime dateTime;
+
     public Review(Movie movie, AppUser user, String review_text, int star_rating) {
         this.movie = movie;
         this.user = user;
         this.review_text = review_text;
         this.star_rating = star_rating;
+        this.dateTime = LocalDateTime.now();
     }
 
     public Review() {
@@ -53,6 +58,10 @@ public class Review extends AbstractEntity{
         return star_rating;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
@@ -67,5 +76,9 @@ public class Review extends AbstractEntity{
 
     public void setStar_rating(int star_rating) {
         this.star_rating = star_rating;
+    }
+
+    public void setDateTime() {
+        this.dateTime = LocalDateTime.now();;
     }
 }

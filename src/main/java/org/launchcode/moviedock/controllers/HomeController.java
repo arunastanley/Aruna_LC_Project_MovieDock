@@ -87,6 +87,7 @@ public class HomeController {
         model.addAttribute("title", "My Profile");
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user", user);
+        model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
 
         return "user/profile";
     }

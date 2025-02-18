@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.launchcode.moviedock.data.AppUserRepository;
 import org.launchcode.moviedock.data.MovieRepository;
+import org.launchcode.moviedock.data.ReviewRepository;
 import org.launchcode.moviedock.models.AppUser;
 import org.launchcode.moviedock.models.Movie;
 import org.launchcode.moviedock.models.dto.UserMovieDTO;
@@ -24,6 +25,9 @@ public class MovieController {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private PrincipalService principalService;
@@ -65,12 +69,14 @@ public class MovieController {
                 appUserRepository.save(user);
                 model.addAttribute("user", user);
                 boolean isFavorite = user.getFavoriteMovies().contains(movie);
+                model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
                 model.addAttribute("isFavorite", !isFavorite);
                 model.addAttribute("title", "My Profile");
                 return "user/profile";
             }
         } else {
             model.addAttribute("user", user);
+            model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
         }
         model.addAttribute("title", "My Profile");
         return "user/profile";
@@ -109,6 +115,7 @@ public class MovieController {
                 user.addToWatchMovies(movie);
                 appUserRepository.save(user);
                 model.addAttribute("user", user);
+                model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
                 boolean isToWatch = user.getToWatchMovies().contains(movie);
                 model.addAttribute("isToWatch", !isToWatch);
                 model.addAttribute("title", "My Profile");
@@ -116,6 +123,7 @@ public class MovieController {
             }
         } else {
             model.addAttribute("user", user);
+            model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
         }
         return "user/profile";
     }
@@ -128,6 +136,7 @@ public class MovieController {
         Optional<Movie> movie = movieRepository.findById(movieId);
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user", user);
+        model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
         user.removeFavoriteMovie(movie.get());
         appUserRepository.save(user);
         model.addAttribute("title", "My Profile");
@@ -139,6 +148,7 @@ public class MovieController {
         Optional<Movie> movie = movieRepository.findById(movieId);
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user", user);
+        model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
         user.removeToWatchMovie(movie.get());
         appUserRepository.save(user);
         model.addAttribute("title", "My Profile");

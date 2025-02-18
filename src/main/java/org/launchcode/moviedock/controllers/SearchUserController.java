@@ -2,6 +2,7 @@ package org.launchcode.moviedock.controllers;
 
 
 import org.launchcode.moviedock.data.AppUserRepository;
+import org.launchcode.moviedock.data.ReviewRepository;
 import org.launchcode.moviedock.models.AppUser;
 import org.launchcode.moviedock.security.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class SearchUserController {
 
     @Autowired
     private PrincipalService principalService;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
 
     @GetMapping("user_search")
@@ -73,6 +77,7 @@ public class SearchUserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user",userFound);
+        model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(userFound.getId()));
 
 
         if (authentication != null && !authentication.toString().contains("anonymous")) {

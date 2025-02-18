@@ -75,40 +75,73 @@
 
     <table th:unless="${#lists.isEmpty(user.reviewsList)}" class="table">
 
-        <tr th:each="i : ${#numbers.sequence(user.reviewsList.size() - 1, 0, -1)}">
+<!--        <tr th:each="i : ${#numbers.sequence(user.reviewsList.size() - 1, 0, -1)}">-->
+<!--        <td style="width:15%"><img class="img-poster" th:src="${user.reviewsList[i].movie.poster}" alt="poster"></td>-->
+
+<!--        <td>-->
+<!--            <h3> <a th:href="@{'search/movie-view/' + ${user.reviewsList[i].movie.getApiID()}}" style="font-weight: bold;" th:text="${user.reviewsList[i].movie.getTitle()}"></a></h3>-->
+<!--            <span th:each="j:${#numbers.sequence(1, 5)}">-->
+<!--                        <span th:if="${user.reviewsList[i].star_rating >=j }"  class="fa fa-star star-checked"></span>-->
+<!--                        <span th:unless="${user.reviewsList[i].star_rating >=j }"  class="fa fa-star"></span>-->
+<!--                    </span>-->
+
+<!--            <p th:text="${user.reviewsList[i].review_text}"></p>-->
+
+<!--            <p th:unless="${selfProfile =='false'}">-->
+
+<!--            <form th:unless="${selfProfile =='false'}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">-->
+<!--                <button type="submit" class="btn btn-danger btn-xs"-->
+<!--                        th:data-confirm-delete="|Are you sure you want to delete review for: ${user.reviewsList[i].movie.name}?|"-->
+<!--                        onclick="return confirm(this.getAttribute('data-confirm-delete'))"-->
+<!--                >Delete</button>-->
+
+<!--                <a class="btn btn-success btn-xs" role="button" th:href="@{/review(movieId=${user.reviewsList[i].movie.id})}"-->
+<!--                   th:data-confirm-update="|Are you sure you want to update review for: ${user.reviewsList[i].movie.name}?|"-->
+<!--                   onclick="return confirm(this.getAttribute('data-confirm-update'))"-->
+<!--                >Update</a>-->
 
 
-            <td style="width:15%"><img class="img-poster" th:src="${user.reviewsList[i].movie.poster}" alt="poster"></td>
+<!--            </form>-->
+
+<!--            </p>-->
+
+<!--        </td>-->
+<!--        </tr>-->
+        <tr th:each="review : ${reviews}">
+            <td style="width:15%"><img class="img-poster" th:src="${review.movie.poster}" alt="poster"></td>
 
             <td>
-                <h3> <a th:href="@{'search/movie-view/' + ${user.reviewsList[i].movie.getApiID()}}" style="font-weight: bold;" th:text="${user.reviewsList[i].movie.getTitle()}"></a></h3>
+                <h3> <a th:href="@{'search/movie-view/' + ${review.movie.getApiID()}}" style="font-weight: bold;" th:text="${review.movie.getTitle()}"></a></h3>
                 <span th:each="j:${#numbers.sequence(1, 5)}">
-                        <span th:if="${user.reviewsList[i].star_rating >=j }"  class="fa fa-star star-checked"></span>
-                        <span th:unless="${user.reviewsList[i].star_rating >=j }"  class="fa fa-star"></span>
+                        <span th:if="${review.star_rating >=j }"  class="fa fa-star star-checked"></span>
+                        <span th:unless="${review.star_rating >=j }"  class="fa fa-star"></span>
                     </span>
 
-                <p th:text="${user.reviewsList[i].review_text}"></p>
+                <p th:text="${review.review_text}"></p>
 
                 <p th:unless="${selfProfile =='false'}">
 
-                <form th:unless="${selfProfile =='false'}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">
-                <button type="submit" class="btn btn-danger btn-xs"
-                        th:data-confirm-delete="|Are you sure you want to delete review for: ${user.reviewsList[i].movie.name}?|"
-                        onclick="return confirm(this.getAttribute('data-confirm-delete'))"
-                >Delete</button>
+                <form th:unless="${selfProfile =='false'}" th:action="@{/delete_review(reviewId=${review.id})}" method="post">
+                    <button type="submit" class="btn btn-danger btn-xs"
+                            th:data-confirm-delete="|Are you sure you want to delete review for: ${review.movie.name}?|"
+                            onclick="return confirm(this.getAttribute('data-confirm-delete'))"
+                    >Delete</button>
 
-                <a class="btn btn-success btn-xs" role="button" th:href="@{/review(movieId=${user.reviewsList[i].movie.id})}"
-                         th:data-confirm-update="|Are you sure you want to update review for: ${user.reviewsList[i].movie.name}?|"
-                         onclick="return confirm(this.getAttribute('data-confirm-update'))"
-                >Update</a>
+                    <a class="btn btn-success btn-xs" role="button" th:href="@{/review(movieId=${review.movie.id})}"
+                       th:data-confirm-update="|Are you sure you want to update review for: ${review.movie.name}?|"
+                       onclick="return confirm(this.getAttribute('data-confirm-update'))"
+                    >Update</a>
 
 
-            </form>
+                </form>
 
                 </p>
 
             </td>
         </tr>
+
+
+
 
 
     </table>

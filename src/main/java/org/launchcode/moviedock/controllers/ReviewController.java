@@ -104,19 +104,21 @@ public class ReviewController {
 
                 review.setReview_text(userReview.getReview_text());
                 review.setStar_rating(userReview.getStar_rating());
+                review.setDateTime();
                 reviewRepository.save(review);
             } else {
 
-                Review newReview = new Review();
-                newReview.setReview_text(userReview.getReview_text());
-                newReview.setStar_rating(userReview.getStar_rating());
-                newReview.setMovie(movie);
-                newReview.setUser(user);
+                Review newReview = new Review(movie,user,userReview.getReview_text(),userReview.getStar_rating());
+//                newReview.setReview_text(userReview.getReview_text());
+//                newReview.setStar_rating(userReview.getStar_rating());
+//                newReview.setMovie(movie);
+//                newReview.setUser(user);
                 reviewRepository.save(newReview);
             }
 
 
             model.addAttribute("user", user);
+            model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
             model.addAttribute("title", "My Profile");
 
             return "user/profile.html";
@@ -132,6 +134,7 @@ public class ReviewController {
         reviewRepository.deleteById(reviewId);
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user",user);
+        model.addAttribute("reviews", reviewRepository.findReviewSortDescDate(user.getId()));
         model.addAttribute("title", "My Profile");
 
         return "user/profile.html";
