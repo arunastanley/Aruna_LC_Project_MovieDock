@@ -193,6 +193,7 @@ public class HomeController {
                 MovieRepository.save(a);
                 //            For adding review Link and diplaying reviews for the movie
                 model.addAttribute("movie",a);
+                model.addAttribute("reviews", reviewRepository.findReviewByMovieSortDescDate(a.getId()));
             }
             else{
                 System.out.println("it doesn't exist");
@@ -239,6 +240,7 @@ public class HomeController {
                 MovieRepository.save(a);
                 //            For adding review Link and diplaying reviews for the movie
                 model.addAttribute("movie",a);
+                model.addAttribute("reviews", reviewRepository.findReviewByMovieSortDescDate(a.getId()));
             }
             else{
                 System.out.println("it doesn't exist");

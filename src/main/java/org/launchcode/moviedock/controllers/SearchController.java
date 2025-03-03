@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.launchcode.moviedock.data.ApiMovieRepository;
 import org.launchcode.moviedock.data.MovieRepository;
+import org.launchcode.moviedock.data.ReviewRepository;
 import org.launchcode.moviedock.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,9 @@ public class SearchController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @GetMapping("results")
     public String index(Model model){
@@ -110,6 +114,7 @@ public class SearchController {
 
 //            For adding review Link and diplaying reviews for the movie
             model.addAttribute("movie",a);
+            model.addAttribute("reviews", reviewRepository.findReviewByMovieSortDescDate(a.getId()));
 
         }
         else{

@@ -36,17 +36,31 @@
     <h3>Latest Reviews </h3>
 <hr />
 
+<p th:if="${#lists.isEmpty(movie.reviewsList)}">Be the first to review this movie</p>
+
 <table>
 
-    <tr th:each="i : ${#numbers.sequence(movie.reviewsList.size() - 1, 0, -1)}">
+<!--    <tr th:each="i : ${#numbers.sequence(movie.reviewsList.size() - 1, 0, -1)}">-->
 
-        <label style="font-weight: normal">Review by:  <a th:href="@{/searched_profile(userId=${movie.reviewsList[i].user.id})}" style="font-weight: bold;" th:text="${movie.reviewsList[i].user.username}"></a></label>
+<!--        <label style="font-weight: normal">Review by:  <a th:href="@{/searched_profile(userId=${movie.reviewsList[i].user.id})}" style="font-weight: bold;" th:text="${movie.reviewsList[i].user.username}"></a></label>-->
+
+<!--        <span th:each="j:${#numbers.sequence(1, 5)}">-->
+<!--                    <span th:if="${movie.reviewsList[i].star_rating >=j }"  class="fa fa-star star-checked"></span>-->
+<!--                    <span th:unless="${movie.reviewsList[i].star_rating >=j }"  class="fa fa-star"></span>-->
+<!--                </span>-->
+<!--        <p th:text="${movie.reviewsList[i].review_text}"></p>-->
+<!--        <hr class="hr-light"/>-->
+<!--    </tr>-->
+
+    <tr th:each="review : ${reviews}">
+
+        <label style="font-weight: normal">Review by:  <a th:href="@{/searched_profile(userId=${review.user.id})}" style="font-weight: bold;" th:text="${review.user.username}"></a></label>
 
         <span th:each="j:${#numbers.sequence(1, 5)}">
-                    <span th:if="${movie.reviewsList[i].star_rating >=j }"  class="fa fa-star star-checked"></span>
-                    <span th:unless="${movie.reviewsList[i].star_rating >=j }"  class="fa fa-star"></span>
+                    <span th:if="${review.star_rating >=j }"  class="fa fa-star star-checked"></span>
+                    <span th:unless="${review.star_rating >=j }"  class="fa fa-star"></span>
                 </span>
-        <p th:text="${movie.reviewsList[i].review_text}"></p>
+        <p th:text="${review.review_text}"></p>
         <hr class="hr-light"/>
     </tr>
 </table>

@@ -21,6 +21,9 @@ public interface ReviewRepository extends CrudRepository<Review, Integer> {
     @Query(value ="SELECT * FROM review where user_id = :userId order by date_time desc ",nativeQuery = true)
     List<Review> findReviewSortDescDate(Integer userId);
 
+    @Query(value ="SELECT * FROM review where movie_id = :movieId order by date_time desc ",nativeQuery = true)
+    List<Review> findReviewByMovieSortDescDate(Integer movieId);
+
 
 
 //    @Query(value ="SELECT * FROM review WHERE user_id = :userId",nativeQuery = true)
